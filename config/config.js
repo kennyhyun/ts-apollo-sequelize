@@ -1,4 +1,5 @@
 /* eslint-disable */
+const { Sequelize } = require('sequelize');
 const dotenv = require('dotenv');
 const path = require('path');
 /* eslint-enable */
@@ -24,6 +25,17 @@ let config = {
   dialect: process.env.DB_CONNECTOR,
   define: {
     underscored: false,
+  },
+  retry: {
+    max: 3,
+    timeout: 3000,
+    match: [
+      Sequelize.ConnectionError,
+      Sequelize.ConnectionRefusedError,
+      Sequelize.ConnectionTimeoutError,
+    ],
+    backoffBase: 1000,
+    backoffExponent: 1.5,
   },
 };
 
