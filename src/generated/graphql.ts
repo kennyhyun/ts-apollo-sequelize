@@ -37,6 +37,7 @@ export enum Gender {
 export type Mutation = {
   __typename?: 'Mutation';
   addNotificationToken?: Maybe<Notification>;
+  createRecipe?: Maybe<Recipe>;
   signInApple: AuthPayload;
   signInEmail: AuthPayload;
   signInFacebook: AuthPayload;
@@ -48,6 +49,11 @@ export type Mutation = {
 
 export type MutationAddNotificationTokenArgs = {
   notification: NotificationInput;
+};
+
+
+export type MutationCreateRecipeArgs = {
+  recipe: RecipeInput;
 };
 
 
@@ -110,6 +116,7 @@ export type Query = {
   __typename?: 'Query';
   notifications: Array<Notification>;
   posts: Array<Post>;
+  recipes?: Maybe<Array<Recipe>>;
   user?: Maybe<User>;
   users: Array<User>;
 };
@@ -117,6 +124,25 @@ export type Query = {
 
 export type QueryUserArgs = {
   id: Scalars['ID'];
+};
+
+export type Recipe = {
+  __typename?: 'Recipe';
+  id: Scalars['ID'];
+  title?: Maybe<Scalars['String']>;
+  ingredients?: Maybe<Scalars['String']>;
+  seasoning?: Maybe<Scalars['String']>;
+  servings?: Maybe<Scalars['Float']>;
+  processes?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type RecipeInput = {
+  title?: Maybe<Scalars['String']>;
+  ingredients?: Maybe<Scalars['String']>;
+  seasoning?: Maybe<Scalars['String']>;
+  processes?: Maybe<Scalars['String']>;
 };
 
 export type SocialUserInput = {
@@ -154,6 +180,7 @@ export type User = {
   verified?: Maybe<Scalars['Boolean']>;
   notifications?: Maybe<Array<Maybe<Notification>>>;
   posts?: Maybe<Array<Maybe<Post>>>;
+  Recipes?: Maybe<Array<Maybe<Recipe>>>;
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
   deletedAt?: Maybe<Scalars['DateTime']>;
@@ -254,6 +281,8 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   Post: ResolverTypeWrapper<Post>;
+  Recipe: ResolverTypeWrapper<Recipe>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
   User: ResolverTypeWrapper<User>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   Gender: Gender;
@@ -261,6 +290,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Mutation: ResolverTypeWrapper<{}>;
   NotificationInput: NotificationInput;
+  RecipeInput: RecipeInput;
   SocialUserInput: SocialUserInput;
   AuthPayload: ResolverTypeWrapper<AuthPayload>;
   UserInput: UserInput;
@@ -275,6 +305,8 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   DateTime: Scalars['DateTime'];
   Post: Post;
+  Recipe: Recipe;
+  Float: Scalars['Float'];
   User: User;
   Date: Scalars['Date'];
   Gender: Gender;
@@ -282,6 +314,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Mutation: {};
   NotificationInput: NotificationInput;
+  RecipeInput: RecipeInput;
   SocialUserInput: SocialUserInput;
   AuthPayload: AuthPayload;
   UserInput: UserInput;
@@ -304,6 +337,7 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 
 export type MutationResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addNotificationToken?: Resolver<Maybe<ResolversTypes['Notification']>, ParentType, ContextType, RequireFields<MutationAddNotificationTokenArgs, 'notification'>>;
+  createRecipe?: Resolver<Maybe<ResolversTypes['Recipe']>, ParentType, ContextType, RequireFields<MutationCreateRecipeArgs, 'recipe'>>;
   signInApple?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationSignInAppleArgs, 'socialUser'>>;
   signInEmail?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationSignInEmailArgs, 'email' | 'password'>>;
   signInFacebook?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationSignInFacebookArgs, 'socialUser'>>;
@@ -334,8 +368,21 @@ export type PostResolvers<ContextType = MyContext, ParentType extends ResolversP
 export type QueryResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   notifications?: Resolver<Array<ResolversTypes['Notification']>, ParentType, ContextType>;
   posts?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType>;
+  recipes?: Resolver<Maybe<Array<ResolversTypes['Recipe']>>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
   users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+};
+
+export type RecipeResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Recipe'] = ResolversParentTypes['Recipe']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  ingredients?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  seasoning?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  servings?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  processes?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type SubscriptionResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
@@ -358,6 +405,7 @@ export type UserResolvers<ContextType = MyContext, ParentType extends ResolversP
   verified?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   notifications?: Resolver<Maybe<Array<Maybe<ResolversTypes['Notification']>>>, ParentType, ContextType>;
   posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType>;
+  Recipes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Recipe']>>>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
@@ -372,6 +420,7 @@ export type Resolvers<ContextType = MyContext> = {
   Notification?: NotificationResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Recipe?: RecipeResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };

@@ -1,15 +1,14 @@
 # import User from "user.graphql"
-# import AuthPayload from "user.graphql"
-# import SocialUserInput from "user.graphql"
-# import UserInput from "user.graphql"
-# import Notification from "notification.graphql"
-# import NotificationInput from "notification.graphql"
+# import AuthPayload, SocialUserInput, UserInput from "user.graphql"
+# import Notification, NotificationInput from "notification.graphql"
 # import Post from "post.graphql"
+# import Recipe, RecipeInput from "recipe.graphql"
 
 type Query {
   users: [User!]!
   user(id: ID!): User
   posts: [Post!]!
+  recipes: [Recipe!]
   notifications: [Notification!]!
 }
 
@@ -21,6 +20,7 @@ type Mutation {
   signUp(user: UserInput!): AuthPayload!
   addNotificationToken(notification: NotificationInput!): Notification
   updateProfile(user: UserInput!): User
+  createRecipe(recipe: RecipeInput!): Recipe
 }
 
 type Subscription {

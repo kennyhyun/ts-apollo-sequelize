@@ -1,5 +1,6 @@
 import models, { ModelType } from './models';
 
+import { AuthenticationError } from 'apollo-server-express';
 import { JwtUser } from './types';
 import { PubSub } from 'graphql-subscriptions';
 import { Request } from 'apollo-server';
@@ -48,7 +49,7 @@ export function createContext(ctx: ExpressContext): MyContext {
       const token = getToken(request);
 
       if (!token) {
-        return null;
+        throw new AuthenticationError('User is not logged in');
       }
 
       const user = jwt.verify(token, JWT_SECRET) as JwtUser;

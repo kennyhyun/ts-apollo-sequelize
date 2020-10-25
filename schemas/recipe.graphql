@@ -1,0 +1,20 @@
+scalar Date
+scalar DateTime
+
+type Recipe {
+  id: ID!
+  title: String
+  ingredients: String
+  seasoning: String
+  servings: Float
+  processes: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input RecipeInput {
+  title: String
+  ingredients: String
+  seasoning: String
+  processes: String
+}
