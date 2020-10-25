@@ -8,6 +8,7 @@ import sequelize from '../db';
 const { STRING, BOOLEAN, UUID, UUIDV1, ENUM } = DataTypes;
 
 enum Gender {
+  Unknown = 'UNKNOWN',
   Male = 'MALE',
   Female = 'FEMALE'
 }
@@ -55,7 +56,7 @@ User.init(
     },
     name: STRING,
     nickname: STRING,
-    gender: ENUM('MALE', 'FEMALE'),
+    gender: ENUM('MALE', 'FEMALE', 'UNKNOWN'),
     thumbUrl: STRING,
     photoURL: STRING,
     birthday: {

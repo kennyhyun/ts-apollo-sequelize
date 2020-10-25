@@ -1,5 +1,9 @@
 # import User from "user.graphql"
+# import AuthPayload from "user.graphql"
+# import SocialUserInput from "user.graphql"
+# import UserInput from "user.graphql"
 # import Notification from "notification.graphql"
+# import NotificationInput from "notification.graphql"
 # import Post from "post.graphql"
 
 type Query {

@@ -12,9 +12,13 @@ import { importSchema } from 'graphql-import';
 
 require('dotenv').config();
 
-const { PORT = 4000 } = process.env;
+const { NODE_ENV, PORT = 4000 } = process.env;
 
 const typeDefs = importSchema('schemas/schema.graphql');
+
+
+console.log(NODE_ENV);
+
 
 const schema = applyMiddleware(
   makeExecutableSchema({
