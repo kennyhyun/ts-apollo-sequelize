@@ -2,6 +2,7 @@ import { BuildOptions, DATEONLY, DataTypes, Model } from 'sequelize';
 
 import Notification from './Notification';
 import Post from './Post';
+// import Recipe from './Recipe';
 import moment from 'moment';
 import sequelize from '../db';
 
@@ -38,6 +39,8 @@ export class User extends Model {
   public readonly updatedAt!: Date;
   public readonly deletedAt: Date;
 }
+
+export type UserInstance = User;
 
 User.init(
   {
@@ -79,11 +82,6 @@ User.init(
     paranoid: true,
   },
 );
-
-User.hasMany(Notification);
-Notification.belongsTo(User);
-User.hasMany(Post);
-Post.belongsTo(User);
 
 export type UserModelStatic = typeof Model & {
   new (values?: Record<string, unknown>, options?: BuildOptions): User;

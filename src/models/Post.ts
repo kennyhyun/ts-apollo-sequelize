@@ -10,6 +10,7 @@ class Post extends Model {
   public readonly updatedAt!: Date;
   public readonly deletedAt!: Date;
 }
+export type PostInstance = Post;
 
 Post.init(
   {

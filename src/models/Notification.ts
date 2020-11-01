@@ -11,6 +11,8 @@ class Notification extends Model {
   public readonly updatedAt: Date;
 }
 
+export type NotificationInstance = Notification;
+
 Notification.init(
   {
     id: {

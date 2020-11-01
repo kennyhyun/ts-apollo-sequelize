@@ -1,5 +1,5 @@
 import { BuildOptions, FLOAT, Model, STRING, UUID, UUIDV4 } from 'sequelize';
-import User from './User';
+import { StepItemInstance } from './StepItem';
 
 import sequelize from '../db';
 
@@ -9,13 +9,20 @@ class Recipe extends Model {
   public ingredients: string;
   public seasoning: string;
   public servings: number;
-  public processes: string;
   public tips: string;
   public desc: string;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
   public readonly deletedAt!: Date;
+  public readonly stepItems?: StepItemInstance[];
+
+  get steps(): string[] {
+    const { stepItems } = this;
+    return stepItems.map((i) => i.text);
+  }
 }
+
+export type RecipeInstance = Recipe;
 
 Recipe.init(
   {
@@ -29,7 +36,6 @@ Recipe.init(
     ingredients: STRING,
     seasoning: STRING,
     servings: FLOAT,
-    processes: STRING,
     tips: STRING,
     desc: STRING,
   },
@@ -40,8 +46,6 @@ Recipe.init(
     paranoid: true,
   },
 );
-
-Recipe.belongsTo(User, { foreignKey: 'authorId', as: 'author' });
 
 export type RecipeModelStatic = typeof Model & {
   new (values?: Record<string, unknown>, options?: BuildOptions): Recipe;

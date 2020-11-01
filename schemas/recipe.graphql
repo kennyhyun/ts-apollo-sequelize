@@ -9,7 +9,7 @@ type Recipe {
   ingredients: String
   seasoning: String
   servings: Float
-  processes: String
+  steps: [String]
   createdAt: DateTime
   updatedAt: DateTime
   tips: String
@@ -21,7 +21,7 @@ input RecipeInput {
   title: String
   ingredients: String
   seasoning: String
-  processes: String
+  stepItems: [String]
   desc: String
   tips: String
   servings: Float
