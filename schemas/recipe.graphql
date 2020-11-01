@@ -1,3 +1,5 @@
+# import User from "user.graphql"
+
 scalar Date
 scalar DateTime
 
@@ -10,6 +12,9 @@ type Recipe {
   processes: String
   createdAt: DateTime
   updatedAt: DateTime
+  tips: String
+  desc: String
+  author: User
 }
 
 input RecipeInput {
@@ -17,4 +22,7 @@ input RecipeInput {
   ingredients: String
   seasoning: String
   processes: String
+  desc: String
+  tips: String
+  servings: Float
 }

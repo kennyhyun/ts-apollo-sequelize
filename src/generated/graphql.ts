@@ -136,6 +136,9 @@ export type Recipe = {
   processes?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+  tips?: Maybe<Scalars['String']>;
+  desc?: Maybe<Scalars['String']>;
+  author?: Maybe<User>;
 };
 
 export type RecipeInput = {
@@ -143,6 +146,9 @@ export type RecipeInput = {
   ingredients?: Maybe<Scalars['String']>;
   seasoning?: Maybe<Scalars['String']>;
   processes?: Maybe<Scalars['String']>;
+  desc?: Maybe<Scalars['String']>;
+  tips?: Maybe<Scalars['String']>;
+  servings?: Maybe<Scalars['Float']>;
 };
 
 export type SocialUserInput = {
@@ -382,6 +388,9 @@ export type RecipeResolvers<ContextType = MyContext, ParentType extends Resolver
   processes?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  tips?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  desc?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  author?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 

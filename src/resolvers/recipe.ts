@@ -3,8 +3,16 @@ import { Recipe, Resolvers } from '../generated/graphql';
 const resolver: Resolvers = {
   Query: {
     recipes: async (_, args, { getUser, models }): Promise<Recipe[]> => {
-      const { Recipe } = models;
-      return Recipe.findAll();
+      const { Recipe, User } = models;
+      const recipes = await Recipe.findAll({
+        include: [
+          {
+            model: User,
+            as: 'author',
+          },
+        ],
+      });
+      return recipes;
     },
   },
   Mutation: {
@@ -14,7 +22,7 @@ const resolver: Resolvers = {
       const { recipe: input } = args;
       // eslint-disable-next-line
       console.log('createRecipe', input);
-      const recipe = await Recipe.create(args.recipe, { raw: true });
+      const recipe = await Recipe.create({ ...args.recipe, authorId: auth.id }, { raw: true });
       return recipe;
     },
   },

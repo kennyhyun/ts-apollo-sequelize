@@ -82,7 +82,6 @@ User.init(
 
 User.hasMany(Notification);
 Notification.belongsTo(User);
-// User.hasMany(Recipe);
 User.hasMany(Post);
 Post.belongsTo(User);
 
