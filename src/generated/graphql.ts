@@ -133,7 +133,7 @@ export type Recipe = {
   ingredients?: Maybe<Scalars['String']>;
   seasoning?: Maybe<Scalars['String']>;
   servings?: Maybe<Scalars['Float']>;
-  processes?: Maybe<Scalars['String']>;
+  steps?: Maybe<Array<Maybe<Scalars['String']>>>;
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   tips?: Maybe<Scalars['String']>;
@@ -145,7 +145,7 @@ export type RecipeInput = {
   title?: Maybe<Scalars['String']>;
   ingredients?: Maybe<Scalars['String']>;
   seasoning?: Maybe<Scalars['String']>;
-  processes?: Maybe<Scalars['String']>;
+  stepItems?: Maybe<Array<Maybe<Scalars['String']>>>;
   desc?: Maybe<Scalars['String']>;
   tips?: Maybe<Scalars['String']>;
   servings?: Maybe<Scalars['Float']>;
@@ -385,7 +385,7 @@ export type RecipeResolvers<ContextType = MyContext, ParentType extends Resolver
   ingredients?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   seasoning?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   servings?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  processes?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  steps?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   tips?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
