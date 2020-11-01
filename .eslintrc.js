@@ -23,7 +23,7 @@ module.exports = {
     'max-len': ['error', { code: 100 }],
     'comma-dangle': ['error', 'always-multiline'],
     semi: [2, 'always'],
-    'arrow-parens': ['error', 'always'],
+    // 'arrow-parens': ['error', 'always'],
     'no-new-object': 'error',
     'no-array-constructor': 'error',
     'sort-imports': [
