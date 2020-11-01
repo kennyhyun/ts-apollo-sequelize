@@ -14,6 +14,8 @@
     "watch": "yarn prestart && nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server.ts",
     "lint": "eslint src/**/**/*.ts && eslint tests/**/**/*.ts",
     "tsc": "tsc",
+    "pretest": "docker-compose -f docker-compose.test.yml up -d",
+    "pretest:watch": "docker-compose -f docker-compose.test.yml up -d",
     "test": "NODE_ENV=test jest --runInBand",
     "test:watch": "jest --watch",
     "codegen": "graphql-codegen",
