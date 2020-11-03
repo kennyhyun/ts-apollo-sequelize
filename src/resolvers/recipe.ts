@@ -8,6 +8,7 @@ const resolver: Resolvers = {
       const { Recipe, User, StepItem } = models;
       const recipes = await Recipe.findAll({
         include: [{ model: StepItem }, { model: User, as: 'author' }],
+        order: [['createdAt', 'desc'], [StepItem, 'sequence', 'asc']],
       });
       return recipes;
     },
