@@ -5,14 +5,13 @@ const path = require('path');
 /* eslint-enable */
 
 const env = process.env.NODE_ENV;
-
-const envPath = env === 'production'
-  ? path.resolve(__dirname, '../dotenv/prod.env')
-  : env === 'development'
-    ? path.resolve(__dirname, '../dotenv/dev.env')
-    : env === 'test'
-      ? path.resolve(__dirname, '../dotenv/test.env')
-      : path.resolve(__dirname, '../dotenv/.env');
+const envKeyMap = {
+  production: 'prod',
+  stage: 'stg',
+  development: 'dev',
+  test: 'test',
+};
+const envPath = path.resolve(__dirname, `../dotenv/${envKeyMap[env] || ''}.env`);
 
 dotenv.config({ path: envPath });
 
