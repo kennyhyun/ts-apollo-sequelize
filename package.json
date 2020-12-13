@@ -16,6 +16,7 @@
     "build:docker": "docker-compose build server",
     "build": "tsc --project .",
     "start": "cross-env NODE_ENV=development nodemon --exec ts-node src/server.ts",
+    "stop:docker": "docker-compose down",
     "watch": "yarn prestart && nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server.ts",
     "lint": "eslint src/**/**/*.ts && eslint tests/**/**/*.ts",
     "tsc": "tsc",
