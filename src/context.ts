@@ -7,9 +7,12 @@ import { Request } from 'apollo-server';
 import { User } from './models/User';
 import jwt from 'jsonwebtoken';
 
+import { RECIPIE_TOKEN } from './constants';
+
 const { JWT_SECRET } = process.env;
 
 export interface MyContext {
+  setCookie: (any) => Promise<any>;
   getUser: () => Promise<User>;
   verifyUser: () => JwtUser;
   models: ModelType;
@@ -42,11 +45,23 @@ export const verifyUser = (token: string): JwtUser => {
 
 export function createContext(ctx: ExpressContext): MyContext {
   const request = ctx.req;
-
+  const response = ctx.res as any;
+  const remoteHost = new URL(request['headers'].origin);
+  const headerToken = request['cookies'] && request['cookies'][RECIPIE_TOKEN];
   return {
+    setCookie: async (obj) =>  {
+      const options = {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24,
+        domain: remoteHost.hostname,
+      };
+      Object.keys(obj).map(key => {
+        response.cookie(key, obj[key], options);
+      });
+    },
     getUser: (): Promise<User> => {
       const { User: userModel } = models;
-      const token = getToken(request);
+      const token = headerToken || getToken(request);
 
       if (!token) {
         throw new AuthenticationError('User is not logged in');
@@ -63,7 +78,7 @@ export function createContext(ctx: ExpressContext): MyContext {
       });
     },
     verifyUser: (): JwtUser => {
-      const token = getToken(request);
+      const token = headerToken || getToken(request);
       if (!token) {
         return null;
       }

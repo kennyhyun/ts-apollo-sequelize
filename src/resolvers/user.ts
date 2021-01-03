@@ -6,6 +6,7 @@ import {
   SocialUserInput,
   User,
 } from '../generated/graphql';
+import { RECIPIE_TOKEN } from '../constants';
 import { encryptCredential, validateCredential } from '../utils/auth';
 
 import { AuthenticationError } from 'apollo-server-express';
@@ -77,14 +78,17 @@ const resolver: Resolvers = {
 
       return userModel.findAll();
     },
-    user: (_, args, { models }): Promise<User> => {
+    user: async (_, args, { getUser, models }): Promise<User> => {
       const { User } = models;
-
+      const { id } = args;
+      if (id === '0') {
+        return getUser();
+      }
       return User.findOne({ where: args });
     },
   },
   Mutation: {
-    signInEmail: async (_, args, { models, appSecret, pubsub }): Promise<AuthPayload> => {
+    signInEmail: async (_, args, { setCookie, models, appSecret, pubsub }): Promise<AuthPayload> => {
       const { User: userModel } = models;
 
       const user = await userModel.findOne({
@@ -107,6 +111,8 @@ const resolver: Resolvers = {
         },
         appSecret,
       );
+
+      await setCookie({ [RECIPIE_TOKEN]: token });
 
       pubsub.publish(USER_SIGNED_IN, { userSignedIn: user });
       return { token, user };

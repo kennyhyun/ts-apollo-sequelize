@@ -40,8 +40,20 @@ const createApolloServer = (): ApolloServer => new ApolloServer({
   },
 });
 
+const rxLocalhosts = /^http(s)?:\/\/(localhost|192.168)/;
+const whitelist = ['http://recipie.yeoyou.net'];
+
 const initializeApolloServer = (apollo: ApolloServer, app: express.Application): () => void => {
-  apollo.applyMiddleware({ app });
+  apollo.applyMiddleware({ app, cors: {
+    origin(origin, callback) {
+      if (!origin || origin.match(rxLocalhosts) || whitelist.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    },
+    credentials: true
+  } });
 
   return (): void => {
     process.stdout.write(

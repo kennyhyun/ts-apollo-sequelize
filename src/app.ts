@@ -1,8 +1,9 @@
 import bodyParser from 'body-parser';
-import cors from 'cors';
 import ejs from 'ejs';
 import express from 'express';
 import path from 'path';
+import cookieParser from 'cookie-parser';
+
 import routes from './routers/root';
 
 require('dotenv').config();
@@ -17,8 +18,8 @@ export const createApp = (): express.Application => {
   app.engine('html', ejs.renderFile);
   app.set('view engine', 'html');
 
+  app.use(cookieParser());
   app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
-  app.use(cors());
 
   app.use('/', routes);
 
